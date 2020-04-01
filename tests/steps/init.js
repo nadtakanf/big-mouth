@@ -10,13 +10,13 @@ let init = async () => {
         return 
     }
 
-		process.env.TEST_ROOT = 'https://t7gknhfvg3.execute-api.us-west-2.amazonaws.com/dev'
-    process.env.restaurant_api = 'https://t7gknhfvg3.execute-api.us-west-2.amazonaws.com/dev/restaurants'
+		process.env.TEST_ROOT = 'https://c9tauultd4.execute-api.us-west-2.amazonaws.com/dev/'
+    process.env.restaurant_api = 'https://c9tauultd4.execute-api.us-west-2.amazonaws.com/dev/restaurants'
     process.env.restaurants_table = 'restaurants'
     process.env.AWS_REGION = 'us-west-2'
-    process.env.cognito_user_pool_id = 'us-west-2_lF1vo1LoJ'
-    process.env.cognito_client_id = '1ie0lfiaalq5kldk2e3ulvkp6n'
-		process.env.cognito_server_client_id = '7lce9m54umg21js99pcclpvmed'
+    process.env.cognito_user_pool_id = 'us-west-2_TaSvtUFkj'
+    process.env.cognito_client_id = '6rrhsck4d1mk2l6l00rd9f4cqg'
+		process.env.cognito_server_client_id = '1f44sgjjnihguirrkrh20mul3p'
 
 		// loading aws crediential for integration testing
 		// remove {profile: 'nadtakan'} if you are using default profile
