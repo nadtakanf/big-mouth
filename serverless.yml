@@ -2,6 +2,7 @@ service: big-mouth
 
 plugins:
   - serverless-pseudo-parameters #this plug in is helping getting useful parameters
+  - serverless-sam # convert serverless.yml to SAM
 
 provider:
   name: aws
