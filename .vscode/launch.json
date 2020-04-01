@@ -1,0 +1,85 @@
+{
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Attach to SAM local",
+			"type": "node",
+			"request": "attach",
+			"address": "localhost",
+			"port": 5858,
+			"localRoot": "${workspaceFolder}",
+			"remoteRoot": "/var/task"
+		},
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "get-restaurants",
+			"skipFiles": [
+				"<node_internals>/**"
+			],
+			"program": "${workspaceFolder}/node_modules/.bin/sls",
+			"args": [
+				"invoke",
+				"local",
+				"-f",
+				"get-restaurants",
+				"-d",
+				"{}",
+				"--stage",
+				"dev"
+			],
+			"env": {
+				"restaurants_table": "restaurants"
+			}
+		},
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "search-restaurants",
+			"skipFiles": [
+				"<node_internals>/**"
+			],
+			"program": "${workspaceFolder}/node_modules/.bin/sls",
+			"args": [
+				"invoke",
+				"local",
+				"-f",
+				"search-restaurants",
+				"-p",
+				"examples/search-restaurants.json",
+				"--stage",
+				"dev"
+			],
+			"env": {
+				"restaurants_table": "restaurants"
+			}
+		},
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "get-index",
+			"skipFiles": [
+				"<node_internals>/**"
+			],
+			"program": "${workspaceFolder}/node_modules/.bin/sls",
+			"args": [
+				"invoke",
+				"local",
+				"-f",
+				"get-index",
+				"-d",
+				"{}",
+				"--stage",
+				"dev"
+			],
+			"env": {
+				"restaurant_api": "https://c9tauultd4.execute-api.us-west-2.amazonaws.com/dev/restaurants",
+				"cognito_user_pool_id": "us-west-2_TaSvtUFkj",
+				"cognito_client_id": "6rrhsck4d1mk2l6l00rd9f4cqg"
+			}
+		}
+	]
+}
