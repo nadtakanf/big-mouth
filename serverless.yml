@@ -1,0 +1,89 @@
+service: big-mouth
+
+plugins:
+  - serverless-pseudo-parameters #this plug in is helping getting useful parameters
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  profile: nadtakan
+  region: us-west-2
+  stage: ${opt:stage, "dev"}
+  # apiKeys:
+  #   - restaurantKey-${self:provider.stage}
+  iamRoleStatements:
+    - Effect: Allow
+      Action: dynamodb:scan
+      Resource: arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/restaurants
+    - Effect: Allow
+      Action: execute-api:Invoke
+      Resource: arn:aws:execute-api:#{AWS::Region}:#{AWS::AccountId}:*/*/GET/restaurants
+  usagePlan:
+    quota:
+      limit: 10
+      period: DAY
+    throttle:
+      burstLimit: 5
+      rateLimit: 10
+
+package:
+  include:
+    - node_modules/**
+
+custom:
+  tableName: restaurants
+
+functions:
+  get-index:
+    handler: functions/get-index.handler
+    events:
+      - http:
+          path: /
+          method: get
+    environment:
+      restaurant_api: 
+        Fn::Join:
+          - ''
+          - - "https://"
+            - Ref: ApiGatewayRestApi
+            - ".execute-api.#{AWS::Region}.amazonaws.com/${opt:stage}/restaurants"
+      cognito_user_pool_id: us-west-2_lF1vo1LoJ # chage this to import from output cognito
+      cognito_client_id: 1ie0lfiaalq5kldk2e3ulvkp6n # change this to import from output cognito
+
+  get-restaurants:
+    handler: functions/get-restaurants.handler
+    events:
+      - http:
+          path: /restaurants/
+          method: get
+          # private: true # this is how secure with api key 
+          authorizer: aws_iam # secure api with aws_iam
+    environment:
+      restaurants_table: ${self:custom.tableName}
+
+  search-restaurants:
+    handler: functions/search-restaurants.handler
+    events:
+      - http:
+          path: /restaurants/search
+          method: post
+          authorizer:
+            arn: arn:aws:cognito-idp:#{AWS::Region}:#{AWS::AccountId}:userpool/us-west-2_lF1vo1LoJ #Pool ARN , secure api with cognito user pool
+    environment:
+      restaurants_table: ${self:custom.tableName}
+      
+  insert-restaurants:
+    handler: functions/insert-restaurants.handler
+    events:
+      - http:
+          path: /insert
+          method: get
+          authorizer: aws_iam
+
+resources:
+  - ${file(resources/dynamodb-table.yml)}
+  - ${file(resources/cognito-user-pool.yml)}
+
+
+
+
