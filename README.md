@@ -7,8 +7,10 @@ Node module including:
 4. chai
 5. chance
 
-to import data to dynamodb table run
-```node functions/seed-restaurants.js``` 
+Install
+
+Import data to Dynamodb
+```node node functions/seed-restaurants.js```
 
 fixed issue with security error run
 ```export AWS_PROFILE="aws_profile"```
