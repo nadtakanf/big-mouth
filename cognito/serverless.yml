@@ -1,0 +1,15 @@
+service: big-mouth-cognito
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  profile: nadtakan
+  region: us-west-2
+  stage: ${opt:stage, "dev"}
+
+resources:
+  - ${file(resources/cognito-user-pool.yml)}
+
+
+
+

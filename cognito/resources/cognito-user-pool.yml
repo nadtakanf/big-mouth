@@ -63,16 +63,24 @@ Outputs:
     Value:
       Ref: CognitoUserPool
     Export:
-        Name: ${self:service}-${self:provider.stage}-UserPoolId
+        Name: ${self:service}:${self:provider.stage}:UserPoolId
+  
+  UserPoolArn:
+    Value: 
+      Fn::GetAtt:
+        - CognitoUserPool
+        - Arn
+    Export:
+      Name: ${self:service}:${self:provider.stage}:UserPoolArn
 
   UserPoolClientWebId:
     Value:
       Ref: CognitoUserPoolClientWeb
     Export:
-        Name: ${self:service}-${self:provider.stage}-UserPoolClientWebId
+        Name: ${self:service}:${self:provider.stage}:UserPoolClientWebId
 
   UserPoolClientServerId:
     Value:
       Ref: CognitoUserPoolClientServer
     Export:
-        Name: ${self:service}-${self:provider.stage}-UserPoolClientServerId
+        Name: ${self:service}:${self:provider.stage}:UserPoolClientServerId
