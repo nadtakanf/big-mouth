@@ -23,12 +23,10 @@ let init = async () => {
 		// const { credentials } = await promisify(awscred.load)({ 'profile': 'nadtakan' })
 		const { credentials } = await promisify(awscred.load)()
 
-		console.log(`credentials => ${JSON.stringify(credentials)}`)
-
     process.env.AWS_ACCESS_KEY_ID     = credentials.accessKeyId
 		process.env.AWS_SECRET_ACCESS_KEY = credentials.secretAccessKey
 		
-		if(cred.sessionToken){
+		if(credentials.sessionToken){
 			process.env.AWS_SESSION_TOKEN = credentials.sessionToken
 		}
 

@@ -9,6 +9,7 @@ const fetch = require("node-fetch")
 const aws4 = require("aws4")
 const URL = require("url")
 const awscred = require("awscred")
+const { promisify } = require('util')
 
 const awsRegion = process.env.AWS_REGION
 const cognitoUserPoolId = process.env.cognito_user_pool_id
@@ -33,13 +34,13 @@ async function getRestaurants() {
 	}
 	
 	if(!process.env.AWS_ACCESS_KEY_ID) {
-		let cred = await awscred.loadCredentials()
+		const { credentials } = await promisify(awscred.load)()
 
-		process.env.AWS_ACCESS_KEY_ID = cred.accessKeyId
-		process.env.AWS_SECRED_ACCESS_KEY = cred.secretAccessKey
-
-		if(cred.sessionToken){
-			process.env.AWS_SESSION_TOKEN = cred.sessionToken
+    process.env.AWS_ACCESS_KEY_ID     = credentials.accessKeyId
+		process.env.AWS_SECRET_ACCESS_KEY = credentials.secretAccessKey
+		
+		if(credentials.sessionToken){
+			process.env.AWS_SESSION_TOKEN = credentials.sessionToken
 		}
 	}
 
