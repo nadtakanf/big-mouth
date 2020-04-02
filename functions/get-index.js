@@ -8,6 +8,8 @@ const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 
 const fetch = require("node-fetch")
 const aws4 = require("aws4")
 const URL = require("url")
+const awscred = require("awscred")
+
 const awsRegion = process.env.AWS_REGION
 const cognitoUserPoolId = process.env.cognito_user_pool_id
 const cognitoClientId = process.env.cognito_client_id
@@ -28,7 +30,18 @@ async function getRestaurants() {
   var opts = {
     host: url.hostname, 
     path: url.pathname
-  }
+	}
+	
+	if(!process.env.AWS_ACCESS_KEY_ID) {
+		let cred = await awscred.loadCredentials()
+
+		process.env.AWS_ACCESS_KEY_ID = cred.accessKeyId
+		process.env.AWS_SECRED_ACCESS_KEY = cred.secretAccessKey
+
+		if(cred.sessionToken){
+			process.env.AWS_SESSION_TOKEN = cred.sessionToken
+		}
+	}
 
   aws4.sign(opts);
 
