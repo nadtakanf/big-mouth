@@ -20,7 +20,8 @@ let init = async () => {
 
 		// loading aws crediential for integration testing
 		// remove {profile: 'nadtakan'} if you are using default profile
-		const { credentials } = await promisify(awscred.load)({ 'profile': 'nadtakan' })
+		// const { credentials } = await promisify(awscred.load)({ 'profile': 'nadtakan' })
+		const { credentials } = await promisify(awscred.load)()
 
 		console.log(`credentials => ${JSON.stringify(credentials)}`)
 
