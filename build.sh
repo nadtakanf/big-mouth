@@ -16,17 +16,18 @@ if [ $# -eq 0 ]; then
 	instruction
 	exit 1
 elif [ "$1" = "int-test" ] && [ $# -eq 1 ]; then
-	# npm install
+	npm install
 	
 	npm run integration-test
 elif [ "$1" = "acceptance-test" ] && [ $# -eq 1 ]; then
-	# npm install
+	npm install
 
 	npm run acceptance-test
 elif [ "$1" = "deploy" ] && [ $# -eq 2 ]; then
 	STAGE=$2
 
-	# npm install
+	npm install
+	
 	'node_modules/.bin/sls' deploy --stage $STAGE
 
 	npm run integration-test
