@@ -71,7 +71,7 @@ functions:
           path: /restaurants/search
           method: post
           authorizer: 
-            arn: arn:aws:cognito-idp:#{AWS::Region}:#{AWS::AccountId}:userpool/${file('cognito-temp.yml'):COGNITO_USER_POOL_ID} #Pool ARN , secure api with cognito user pool
+            arn: arn:aws:cognito-idp:#{AWS::Region}:#{AWS::AccountId}:userpool/${file(cognito-temp.yml):COGNITO_USER_POOL_ID} #Pool ARN , secure api with cognito user pool
     environment:
       restaurants_table: ${self:custom.tableName}
       
