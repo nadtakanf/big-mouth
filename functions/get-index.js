@@ -2,7 +2,6 @@
 
 const fs = require("fs")
 var html
-
 const Mustache = require("mustache")
 const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 const fetch = require("node-fetch")
