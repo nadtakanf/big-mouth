@@ -22,6 +22,8 @@ let init = async () => {
 		// remove {profile: 'nadtakan'} if you are using default profile
 		const { credentials } = await promisify(awscred.load)({ 'profile': 'nadtakan' })
 
+		console.log(`credentials => ${JSON.stringify(credentials)}`)
+
     process.env.AWS_ACCESS_KEY_ID     = credentials.accessKeyId
   	process.env.AWS_SECRET_ACCESS_KEY = credentials.secretAccessKey
 
