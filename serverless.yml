@@ -1,5 +1,8 @@
 service: big-mouth
 
+org: nadtakanjones
+app: big-mouth-app
+
 plugins:
   - serverless-pseudo-parameters #this plug in is helping getting useful parameters
   - serverless-sam # convert serverless.yml to SAM
@@ -7,7 +10,7 @@ plugins:
 provider:
   name: aws
   runtime: nodejs12.x
-  # profile: nadtakan
+  profile: nadtakan
   region: us-west-2
   stage: ${opt:stage, "dev"}
   # apiKeys:
