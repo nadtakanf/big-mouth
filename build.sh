@@ -27,6 +27,8 @@ elif [ "$1" = "deploy" ] && [ $# -eq 2 ]; then
 	STAGE=$2
 
 	npm install
+
+	'node_modules/.bin/sls' login --stage $STAGE
 	
 	'node_modules/.bin/sls' deploy --stage $STAGE
 
