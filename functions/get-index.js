@@ -5,10 +5,8 @@ var html
 const Mustache = require("mustache")
 const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 const fetch = require("node-fetch")
-const aws4 = require("aws4")
+const aws4 = require("../lib/aws4")
 const URL = require("url")
-const awscred = require("../lib/awscred")
-const { promisify } = require('util')
 
 const awsRegion = process.env.AWS_REGION
 const cognitoUserPoolId = process.env.cognito_user_pool_id
@@ -32,16 +30,16 @@ async function getRestaurants() {
     path: url.pathname
 	}
 	
-	if(!process.env.AWS_ACCESS_KEY_ID) {
-		const { credentials } = await promisify(awscred.load)()
+	// if(!process.env.AWS_ACCESS_KEY_ID) {
+	// 	const { credentials } = await promisify(awscred.load)()
 
-    process.env.AWS_ACCESS_KEY_ID     = credentials.accessKeyId
-		process.env.AWS_SECRET_ACCESS_KEY = credentials.secretAccessKey
+  //   process.env.AWS_ACCESS_KEY_ID     = credentials.accessKeyId
+	// 	process.env.AWS_SECRET_ACCESS_KEY = credentials.secretAccessKey
 		
-		if(credentials.sessionToken){
-			process.env.AWS_SESSION_TOKEN = credentials.sessionToken
-		}
-	}
+	// 	if(credentials.sessionToken){
+	// 		process.env.AWS_SESSION_TOKEN = credentials.sessionToken
+	// 	}
+	// }
 
   aws4.sign(opts);
 
@@ -65,6 +63,9 @@ async function getRestaurants() {
 }
 
 module.exports.handler = async event => {
+
+	await aws4.init()
+
   let template = await loadHtml()
 	let restaurants = await getRestaurants()
   let dayOfWeek = days[new Date().getDay()]

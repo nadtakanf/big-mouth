@@ -1,7 +1,6 @@
 'use strict'
 
-const awscred = require('../../lib/awscred')
-const { promisify } = require('util')
+const aws4 = require('../../lib/aws4')
 
 let initialized = false
 
@@ -21,14 +20,16 @@ let init = async () => {
 		// loading aws crediential for integration testing
 		// remove {profile: 'nadtakan'} if you are using default profile
 		// const { credentials } = await promisify(awscred.load)({ 'profile': 'nadtakan' })
-		const { credentials } = await promisify(awscred.load)()
+		// const { credentials } = await promisify(awscred.load)()
 
-    process.env.AWS_ACCESS_KEY_ID     = credentials.accessKeyId
-		process.env.AWS_SECRET_ACCESS_KEY = credentials.secretAccessKey
+    // process.env.AWS_ACCESS_KEY_ID     = credentials.accessKeyId
+		// process.env.AWS_SECRET_ACCESS_KEY = credentials.secretAccessKey
 		
-		if(credentials.sessionToken){
-			process.env.AWS_SESSION_TOKEN = credentials.sessionToken
-		}
+		// if(credentials.sessionToken){
+		// 	process.env.AWS_SESSION_TOKEN = credentials.sessionToken
+		// }
+
+		await aws4.init()
 
 		console.log("AWS credential loaded")
 		

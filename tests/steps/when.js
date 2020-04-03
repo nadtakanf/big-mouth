@@ -1,6 +1,6 @@
 const APP_ROOT = '../../'
 const _ = require('lodash')
-const aws4 = require('aws4')
+const aws4 = require('../../lib/aws4')
 const URL = require('url')
 const http = require('superagent-promise')(require('superagent'), Promise)
 const mode = process.env.TEST_MODE
