@@ -1,6 +1,6 @@
 'use strict'
 
-const awscred = require('awscred')
+const awscred = require('../../lib/awscred')
 const { promisify } = require('util')
 
 let initialized = false

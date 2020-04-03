@@ -7,7 +7,7 @@ const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 
 const fetch = require("node-fetch")
 const aws4 = require("aws4")
 const URL = require("url")
-const awscred = require("awscred")
+const awscred = require("../lib/awscred")
 const { promisify } = require('util')
 
 const awsRegion = process.env.AWS_REGION
