@@ -31,3 +31,12 @@ COGNITO_CLIENT_WEB_ID: ${COGNITO_CLIENT_WEB_ID}
 COGNITO_CLIENT_SERVER_ID: ${COGNITO_CLIENT_SERVER_ID}
 COGNITO_REGION: ${COGNITO_REGION}
 EOL
+
+# create ssm keys cognito and web id
+aws ssm --profile nadtakan put-parameter \
+    --name "$service-$region-user-pool-id" \
+    --type "String" \
+    --value "${COGNITO_USER_POOL_ID}" \
+    --overwrite 
+	
+# aws ssm get-parameter --name big-mouth-cognito-dev-user-pool-id
