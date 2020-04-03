@@ -1,7 +1,7 @@
 service: big-mouth
 
-org: nadtakanjones
-app: big-mouth-app
+# org: nadtakanjones
+# app: big-mouth-app
 
 plugins:
   - serverless-pseudo-parameters #this plug in is helping getting useful parameters
