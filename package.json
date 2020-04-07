@@ -5,6 +5,8 @@
     "main": "handler.js",
     "scripts": {
         "deploy": "sh ./build.sh",
+        "lint": "eslint 'functions/*.js?(x)'",
+        "lint:fix": "eslint 'functions/*.js?(x)' --fix",
         "integration-test": "TEST_MODE=handler ./node_modules/.bin/mocha tests/test_cases --reporter spec --retries 3 --timeout 10000",
         "acceptance-test": "TEST_MODE=http ./node_modules/.bin/mocha tests/test_cases --reporter spec --retries 3 --timeout 10000"
     },
@@ -24,6 +26,7 @@
     "devDependencies": {
         "chai": "^4.2.0",
         "cheerio": "^1.0.0-rc.3",
+        "eslint": "^6.8.0",
         "lodash": "^4.17.15",
         "mocha": "^6.2.3",
         "serverless": "^1.67.0",
