@@ -12,6 +12,7 @@ const awsRegion = process.env.AWS_REGION
 const cognitoUserPoolId = process.env.cognito_user_pool_id
 const cognitoClientId = process.env.cognito_client_id
 const restaurantApiRoot = process.env.restaurant_api
+const ordersApiRoot = process.env.orders_api
 
 async function loadHtml() {
   if(!html) {
@@ -75,7 +76,8 @@ module.exports.handler = async event => {
     awsRegion,
     cognitoUserPoolId,
     cognitoClientId,
-    searchUrl: `${restaurantApiRoot}/search`
+		searchUrl: `${restaurantApiRoot}/search`,
+		placeOrderUrl: `${ordersApiRoot}`
   }
 
   let html = Mustache.render(template, view);
