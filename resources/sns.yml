@@ -1,0 +1,9 @@
+Resources:
+  restaurantNotificationTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      DisplayName: restaurant-notification
+      TopicName: restaurant-notification
+      Subscription: 
+        - Endpoint: nadtakan.jones@gmail.com
+          Protocol: Email
