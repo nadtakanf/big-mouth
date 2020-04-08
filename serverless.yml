@@ -24,6 +24,10 @@ provider:
     - Effect: Allow
       Action: kinesis:PutRecord
       Resource: arn:aws:kinesis:#{AWS::Region}:#{AWS::AccountId}:stream/order-events
+    # iam permission sns
+    - Effect: Allow
+      Action: sns:Publish
+      Resource: arn:aws:sns:#{AWS::Region}:#{AWS::AccountId}:restaurant-notification
   usagePlan:
     quota:
       limit: 10
@@ -105,11 +109,21 @@ functions:
             arn: arn:aws:cognito-idp:#{AWS::Region}:#{AWS::AccountId}:userpool/${ssm:big-mouth-cognito-dev-user-pool-id} #Pool ARN , secure api with cognito user pool
     environment:
       order_events_stream: order-events
+  
+  notify-restaurant:
+    handler: functions/notify-restaurant.handler
+    events:
+      - stream:
+          arn: arn:aws:kinesis:#{AWS::Region}:#{AWS::AccountId}:stream/order-events
+    environment:
+      order_events_stream: order-events
+      restaurant_notification_topic: arn:aws:sns:#{AWS::Region}:#{AWS::AccountId}:restaurant-notification
 
 resources:
   - ${file(resources/dynamodb-table.yml)}
   - ${file(resources/cognito-user-pool.yml)}
   - ${file(resources/kinesis.yml)}
+  - ${file(resources/sns.yml)}
 
 
 
