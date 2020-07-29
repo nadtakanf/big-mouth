@@ -5,7 +5,7 @@ const AWS = require("aws-sdk")
 const kinesis = new AWS.Kinesis()
 const sns = new AWS.SNS()
 
-const getRecords = require('../lib/kinesis').getRecords
+const getRecords = require("../lib/kinesis").getRecords
 
 const streamName = process.env.order_events_stream
 const topicArn = process.env.restaurant_notification_topic
@@ -23,7 +23,7 @@ module.exports.handler = async(event) => {
 		console.log(`notified restaurant [${order.restaurantName}] of order ${order.orderId}`)
 
 		let data = _.clone(order)
-		data.eventType = 'restaurant_notified'
+		data.eventType = "restaurant_notified"
 
 		let kinesisReq = {
 			Data: JSON.stringify(data),

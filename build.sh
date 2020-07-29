@@ -26,9 +26,12 @@ elif [ "$1" = "acceptance-test" ] && [ $# -eq 1 ]; then
 elif [ "$1" = "deploy" ] && [ $# -eq 2 ]; then
 	STAGE=$2
 
-	npm install
+	# npm install
 
 	# 'node_modules/.bin/sls' login --stage $STAGE
+	'node_modules/.bin/eslint' 'functions/*.js?(x)'
+
+	'node_modules/.bin/eslint' 'functions/*.js?(x)' --fix
 	
 	'node_modules/.bin/sls' deploy --stage $STAGE
 

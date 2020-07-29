@@ -1,0 +1,86 @@
+Resources:
+  # cognitouserpool
+  CognitoUserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      # Generate a name based on the stage
+      UserPoolName: ${self:service}-${self:provider.stage}-user-pool
+      # Set email as an alias
+      AliasAttributes:
+        - preferred_username
+      AutoVerifiedAttributes:
+        - email
+# ref schema -> https://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-settings-attributes.html
+      Schema:
+        - Name: family_name
+          AttributeDataType: String
+          Mutable: true
+          Required: true
+        - Name: email
+          AttributeDataType: String
+          Mutable: true
+          Required: true
+        - Name: given_name
+          AttributeDataType: String
+          Mutable: true
+          Required: true
+
+  CognitoUserPoolClientWeb:
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      # Generate an app client name based on the stage
+      ClientName: ${self:provider.stage}-user-pool-client-web
+      UserPoolId:
+        Ref: CognitoUserPool
+      GenerateSecret: false
+      # https://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-settings-attributes.html#user-pool-settings-attribute-permissions-and-scopes
+      ReadAttributes: 
+        - address
+        - email
+        - phone_number
+        - profile
+        - gender
+
+  CognitoUserPoolClientServer:
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      # Generate an app client name based on the stage
+      ClientName: ${self:provider.stage}-user-pool-client-server
+      UserPoolId:
+        Ref: CognitoUserPool
+      ExplicitAuthFlows:
+        - ADMIN_NO_SRP_AUTH
+      GenerateSecret: false
+      ReadAttributes: 
+        - address
+        - email
+        - phone_number
+        - profile
+        - gender
+# Print out the Id of the User Pool that is created
+Outputs:
+  UserPoolId:
+    Value:
+      Ref: CognitoUserPool
+    Export:
+        Name: ${self:service}:${self:provider.stage}:UserPoolId
+  
+  UserPoolArn:
+    Value: 
+      Fn::GetAtt:
+        - CognitoUserPool
+        - Arn
+    Export:
+      Name: ${self:service}:${self:provider.stage}:UserPoolArn
+
+  UserPoolClientWebId:
+    Value:
+      Ref: CognitoUserPoolClientWeb
+    Export:
+        Name: ${self:service}:${self:provider.stage}:UserPoolClientWebId
+
+  UserPoolClientServerId:
+    Value:
+      Ref: CognitoUserPoolClientServer
+    Export:
+        Name: ${self:service}:${self:provider.stage}:UserPoolClientServerId

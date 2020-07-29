@@ -32,4 +32,13 @@ run ```sam local invoke SearchRestaurants --event examples/search-restaurants.js
 Start SAM local server
 run ```sam local start-api```
 
+Todos:
+1. creating a new dynamodb table storing order id
+2. poppulate data from order tb
+3. accept button 
+2,3 ** graphql and amplify
+
+
+
+
 

@@ -1,0 +1,15 @@
+service: big-mouth-cognito-restaurant-user
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  profile: nadtakan
+  region: us-west-2
+  stage: ${opt:stage, "dev"}
+
+resources:
+  - ${file(resources/cognito-restaurant-user-pool.yml)}
+
+
+
+
