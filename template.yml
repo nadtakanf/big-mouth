@@ -136,12 +136,12 @@ Resources:
             Method: get
             RestApiId:
               Ref: BigMouth
-  Aws_iamResourcePolicy:
+  AwsIamResourcePolicy:
     Type: 'AWS::Lambda::Permission'
     Properties:
       Action: 'lambda:InvokeFunction'
       FunctionName:
-        'Fn::GetAtt':
+        Fn::GetAtt:
           - Aws_iam
           - Arn
       Principal: apigateway.amazonaws.com
